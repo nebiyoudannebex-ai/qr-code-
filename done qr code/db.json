@@ -1,0 +1,369 @@
+{
+  "users": [
+    {
+      "id": "admin-id",
+      "username": "nebiyou",
+      "passwordHash": "cfda9915fd7ed8bfcd90c1f96e333084:090a6afb776ba04eec416ddf3d3d4647904bdc4209000d0a18a868ddb5a71768c900fe64591d6e6e89a120ee7298cd5287a32aabb29d858b0483bab3aab537f8",
+      "role": "admin",
+      "businessName": "System Administration",
+      "createdAt": "2026-07-09T10:52:25.839Z"
+    },
+    {
+      "id": "admin-id",
+      "username": "admin",
+      "passwordHash": "34e6da808d5f272004de85b549967fb3:c2e339c82fce563ec789351ca2b24300255db4dc637475d8dd8b57e34e46b5ad8ab576c1566b6ef2a0a00502eb0e20609766d42ee6c05a1fd0c783bfbda90317",
+      "role": "admin",
+      "businessName": "System Administration",
+      "createdAt": "2026-07-10T16:29:37.329Z"
+    },
+    {
+      "id": "m-demo",
+      "username": "demomerchant",
+      "passwordHash": "55f4dc73a61ec3ad7f756534334c375d:d7d689dcc6acccc3a059de6229fa267cccf197722c07373dafdfb202c3d1b31ce9958cbb2f2fafda8a9af4a683bece0374de78deaaac6a9df9ab975444feda5f",
+      "role": "merchant",
+      "businessName": "Elegance Boutique Ltd",
+      "createdAt": "2026-07-10T16:29:37.347Z"
+    },
+    {
+      "id": "m-e7a8ad12af11",
+      "username": "http://192.168.1.2:3000/staff/admin",
+      "passwordHash": "db16f3ec1ab80d9419b92b9861da60dc:8be8299410a534f76e59599efe322aa7939dfa8af307f1787ec99e60b191330a8e145636bdda8e3f9ed05cd12590a2e62b9953e06832c89576e5c8917631a05d",
+      "role": "merchant",
+      "businessName": "http://192.168.1.2:3000/staff/admin",
+      "createdAt": "2026-07-15T09:09:54.915Z",
+      "accountType": "permanent",
+      "accountStatus": "active"
+    }
+  ],
+  "bankingDetails": [],
+  "auditLogs": [
+    {
+      "id": "ca89efda-1710-426a-8a6d-076b7190c5a8",
+      "userId": "system",
+      "username": "system",
+      "action": "system_init",
+      "details": "Database initialized. Default admin account created.",
+      "createdAt": "2026-07-09T10:52:25.842Z"
+    },
+    {
+      "id": "5f5e7a7a-95e3-4f4e-b085-22898a978e57",
+      "userId": "system",
+      "username": "system",
+      "action": "system_init",
+      "details": "Demo merchant account (demomerchant) seeded with CBE, Telebirr, and Dashen Bank profiles.",
+      "createdAt": "2026-07-09T10:52:25.860Z"
+    },
+    {
+      "id": "96843086-5bed-4c98-848e-60acfe653318",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-09T10:54:22.445Z"
+    },
+    {
+      "id": "2ad632f7-a0ba-4a17-8219-adcb89675622",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "profile_update",
+      "details": "Updated profile details. Username: \"admin\" -> \"nebiyou\", Business: \"System Administration\" -> \"System Administration\".",
+      "createdAt": "2026-07-09T10:54:33.163Z"
+    },
+    {
+      "id": "945add57-5d83-4575-accc-06168304a308",
+      "userId": null,
+      "username": "admin",
+      "action": "login_failed",
+      "details": "Attempted login with incorrect credentials.",
+      "createdAt": "2026-07-09T10:54:45.667Z"
+    },
+    {
+      "id": "46ea9ecd-d9bc-4293-9084-1e6fa3d257d4",
+      "userId": "admin-id",
+      "username": "nebiyou",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-09T10:54:53.265Z"
+    },
+    {
+      "id": "fb97c297-76e9-4003-8d7d-4e7b1a4b85a7",
+      "userId": "admin-id",
+      "username": "nebiyou",
+      "action": "logout",
+      "details": "User logged out.",
+      "createdAt": "2026-07-09T10:58:10.908Z"
+    },
+    {
+      "id": "944b805a-8e71-4ea8-af47-17d22e4501d3",
+      "userId": null,
+      "username": "admin",
+      "action": "login_failed",
+      "details": "Attempted login with incorrect credentials.",
+      "createdAt": "2026-07-09T11:00:50.004Z"
+    },
+    {
+      "id": "22a647c8-337b-465c-ba13-4e7e48e8306a",
+      "userId": null,
+      "username": "admin",
+      "action": "login_failed",
+      "details": "Attempted login with incorrect credentials.",
+      "createdAt": "2026-07-09T11:00:53.127Z"
+    },
+    {
+      "id": "7b79c638-c297-435f-baf6-62f15aaf35c7",
+      "userId": null,
+      "username": "admin",
+      "action": "login_failed",
+      "details": "Attempted login with incorrect credentials.",
+      "createdAt": "2026-07-09T11:00:57.162Z"
+    },
+    {
+      "id": "4e405010-b35a-4a2f-b104-d11d712c4648",
+      "userId": "admin-id",
+      "username": "nebiyou",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-09T11:06:04.488Z"
+    },
+    {
+      "id": "0965bea7-9473-4d89-ae68-ebb1c0ef8e45",
+      "userId": "admin-id",
+      "username": "nebiyou",
+      "action": "logout",
+      "details": "User logged out.",
+      "createdAt": "2026-07-09T12:42:26.588Z"
+    },
+    {
+      "id": "d0201a9b-37ba-47cd-9398-4e7c81d26d61",
+      "userId": null,
+      "username": "admin",
+      "action": "login_failed",
+      "details": "Attempted login with incorrect credentials.",
+      "createdAt": "2026-07-09T12:42:30.053Z"
+    },
+    {
+      "id": "5f8a05e4-7c98-4dbb-adf2-4f79d055feb9",
+      "userId": "admin-id",
+      "username": "nebiyou",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-09T12:42:32.864Z"
+    },
+    {
+      "id": "1c994746-0353-47f4-9b8b-aa691fd0456f",
+      "userId": "system",
+      "username": "system",
+      "action": "system_init",
+      "details": "Database initialized. Default admin account created.",
+      "createdAt": "2026-07-10T16:29:37.331Z"
+    },
+    {
+      "id": "f63fb164-d9c1-4627-9460-e141da5d4c7b",
+      "userId": "system",
+      "username": "system",
+      "action": "system_init",
+      "details": "Demo merchant account (demomerchant) seeded with CBE, Telebirr, and Dashen Bank profiles.",
+      "createdAt": "2026-07-10T16:29:37.347Z"
+    },
+    {
+      "id": "69710a0b-a205-44b9-84b1-7e64bd2555dc",
+      "userId": null,
+      "username": "admin",
+      "action": "login_failed",
+      "details": "Attempted login with incorrect credentials.",
+      "createdAt": "2026-07-11T10:07:27.391Z"
+    },
+    {
+      "id": "67c2bb86-4748-4643-a182-18ece5b0044b",
+      "userId": null,
+      "username": "admin",
+      "action": "login_failed",
+      "details": "Attempted login with incorrect credentials.",
+      "createdAt": "2026-07-11T10:07:37.378Z"
+    },
+    {
+      "id": "e608639f-1cbb-4c14-b661-823b063feb5b",
+      "userId": null,
+      "username": "admin",
+      "action": "login_failed",
+      "details": "Attempted login with incorrect credentials.",
+      "createdAt": "2026-07-11T10:07:45.448Z"
+    },
+    {
+      "id": "7ad9a153-88cc-4bb4-a696-93ba6ebab88e",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-11T10:21:33.354Z"
+    },
+    {
+      "id": "99273909-6b4b-40b0-9575-a984930d911c",
+      "userId": "admin-id",
+      "username": "nebiyou",
+      "action": "merchant_delete",
+      "details": "Deleted merchant account \"Elegance Boutique Ltd\" (Username: demomerchant, ID: m-demo) and all 6 associated mobile banking profiles.",
+      "createdAt": "2026-07-11T10:21:50.209Z"
+    },
+    {
+      "id": "84eaac4c-2ccf-4767-b1a5-3da57c6481a3",
+      "userId": "admin-id",
+      "username": "nebiyou",
+      "action": "logout",
+      "details": "User logged out.",
+      "createdAt": "2026-07-11T11:30:07.519Z"
+    },
+    {
+      "id": "2b3be754-a447-4c9c-b0e9-312bef87ea2e",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T08:50:30.152Z"
+    },
+    {
+      "id": "e250d8f2-508a-4b09-af16-b4d5c0098f87",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T08:50:36.239Z"
+    },
+    {
+      "id": "21e997f2-9b30-4812-96b9-31e01b83cf87",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T08:50:40.006Z"
+    },
+    {
+      "id": "3cb4e1a9-e47e-44bb-b5fb-5cd8900a68b3",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T08:50:49.007Z"
+    },
+    {
+      "id": "dab5b39d-907c-416c-a50d-2bbe86de4d26",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T08:52:01.007Z"
+    },
+    {
+      "id": "fb885359-8422-4d2e-9d32-90816aa7e815",
+      "userId": null,
+      "username": "admin",
+      "action": "login_failed",
+      "details": "Attempted login with incorrect credentials.",
+      "createdAt": "2026-07-15T08:52:07.379Z"
+    },
+    {
+      "id": "9fb44cab-9d82-4ad8-8847-61451311c270",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T08:59:32.353Z"
+    },
+    {
+      "id": "106d3cf1-27ec-4fa1-95e7-7bd3063ffb59",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T08:59:48.166Z"
+    },
+    {
+      "id": "519db6da-938b-4bd5-bc32-31417ee1f9c3",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T09:02:14.930Z"
+    },
+    {
+      "id": "72bc7352-913c-4b39-9c6e-c9ebe4828213",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T09:02:15.759Z"
+    },
+    {
+      "id": "c467464e-1f7e-4eca-a659-fc6ea400e62a",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T09:04:20.193Z"
+    },
+    {
+      "id": "9057d942-61d3-46df-a56d-94c2a36d28ce",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T09:07:52.086Z"
+    },
+    {
+      "id": "eb0eb60d-e3b3-4fe9-b58e-b8183e9306e6",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T09:09:03.011Z"
+    },
+    {
+      "id": "c4d5915d-d7df-4845-98af-2bbd150e89d1",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T09:09:48.278Z"
+    },
+    {
+      "id": "375b0431-9819-4121-83af-01c00353f3cc",
+      "userId": "admin-id",
+      "username": "nebiyou",
+      "action": "merchant_create",
+      "details": "Created permanent merchant account for business \"http://192.168.1.2:3000/staff/admin\" (Username: http://192.168.1.2:3000/staff/admin, ID: m-e7a8ad12af11).",
+      "createdAt": "2026-07-15T09:09:54.915Z"
+    },
+    {
+      "id": "b0c7acf4-9240-4bac-b326-0cef658b5324",
+      "userId": "admin-id",
+      "username": "nebiyou",
+      "action": "logout",
+      "details": "User logged out.",
+      "createdAt": "2026-07-15T09:09:57.771Z"
+    },
+    {
+      "id": "0dbfa07a-d774-46d2-9bef-cc86e23c401c",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T09:18:36.761Z"
+    },
+    {
+      "id": "afe37a70-a6eb-48d9-b5cb-88154ea6a395",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T09:23:33.955Z"
+    },
+    {
+      "id": "5bcdd18f-8688-4566-85ce-36a9b468394e",
+      "userId": "admin-id",
+      "username": "admin",
+      "action": "login_success",
+      "details": "User successfully logged in. Role: admin",
+      "createdAt": "2026-07-15T09:23:40.237Z"
+    }
+  ]
+}

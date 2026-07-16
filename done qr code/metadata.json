@@ -1,0 +1,6 @@
+{
+  "name": "Mobile Banking Directory",
+  "description": "A centralized mobile banking directory platform for businesses allowing customers to access all payment profiles via a single QR code.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
