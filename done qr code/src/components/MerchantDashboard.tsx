@@ -53,7 +53,7 @@ interface MerchantDashboardProps {
   setDarkMode: (value: boolean) => void;
 }
 
-export default function MerchantDashboard({ user, onLogout, darkMode, setDarkMode }: MerchantDashboardProps) {
+export default function MerchantDashboard({ user, onLogout, darkMode, setDarkMode, preloadedBankingDetails = [] }: MerchantDashboardProps) {
   const [currentUser, setCurrentUser] = useState<User>(user);
 
   useEffect(() => {
@@ -63,9 +63,9 @@ export default function MerchantDashboard({ user, onLogout, darkMode, setDarkMod
   // Navigation Tabs
   const [activeTab, setActiveTab] = useState<'payments' | 'qr' | 'settings'>('payments');
   
-  // Banking details state
-  const [banks, setBanks] = useState<BankingDetail[]>([]);
-  const [loadingBanks, setLoadingBanks] = useState(true);
+  // Banking details state - use preloaded data if available for instant load
+  const [banks, setBanks] = useState<BankingDetail[]>(preloadedBankingDetails);
+  const [loadingBanks, setLoadingBanks] = useState(preloadedBankingDetails.length === 0);
   const [bankingError, setBankingError] = useState<string | null>(null);
 
   // Modals / Form states for Banks
@@ -150,8 +150,11 @@ export default function MerchantDashboard({ user, onLogout, darkMode, setDarkMod
   };
 
   useEffect(() => {
-    fetchBanks();
-  }, []);
+    // Only fetch if preloaded data wasn't provided from login response
+    if (preloadedBankingDetails.length === 0) {
+      fetchBanks();
+    }
+  }, [preloadedBankingDetails]);
 
   const handleLogout = async () => {
     try {
