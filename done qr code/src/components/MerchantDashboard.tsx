@@ -149,7 +149,6 @@ export default function MerchantDashboard({ user, onLogout, darkMode, setDarkMod
   };
 
   useEffect(() => {
-    // Only fetch if preloaded data wasn't provided from login response
     if (preloadedBankingDetails.length === 0) {
       fetchBanks();
     }
@@ -326,7 +325,6 @@ export default function MerchantDashboard({ user, onLogout, darkMode, setDarkMod
   };
 
   const downloadQrCode = () => {
-    // Generate simple download trigger for QR
     fetch(qrCodeUrl)
       .then(response => response.blob())
       .then(blob => {
@@ -339,7 +337,6 @@ export default function MerchantDashboard({ user, onLogout, darkMode, setDarkMod
       })
       .catch(err => {
         console.error('Failed to download QR code image directly', err);
-        // Fallback open in new window
         window.open(qrCodeUrl, '_blank');
       });
   };
