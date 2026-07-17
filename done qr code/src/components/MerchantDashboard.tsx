@@ -45,10 +45,12 @@ export const ETHIOPIAN_BANKS_PRESETS = [
 ];
 
 interface MerchantDashboardProps {
-  user: User;
+  user: User; // or whatever your user type is
   onLogout: () => void;
+  onSessionExpired: () => void; // Add this line
+  preloadedBankingDetails: any[]; // Add this line (replace any[] with BankingDetail[] if you have that type)
   darkMode: boolean;
-  setDarkMode: (dark: boolean) => void;
+  setDarkMode: (value: boolean) => void;
 }
 
 export default function MerchantDashboard({ user, onLogout, darkMode, setDarkMode }: MerchantDashboardProps) {
