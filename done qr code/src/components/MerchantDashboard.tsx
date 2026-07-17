@@ -23,9 +23,6 @@ import {
 } from 'lucide-react';
 import { User, BankingDetail } from '../types';
 import BankLogo from './BankLogo';
-import BrandLogo from './BrandLogo';
-import { createSessionTimeoutHandler } from '../utils/session';
-import { apiFetch } from '../utils/api';
 
 export const ETHIOPIAN_BANKS_PRESETS = [
   'Commercial Bank of Ethiopia (CBE)',
@@ -50,26 +47,16 @@ export const ETHIOPIAN_BANKS_PRESETS = [
 interface MerchantDashboardProps {
   user: User;
   onLogout: () => void;
-  onSessionExpired: () => void;
   darkMode: boolean;
   setDarkMode: (dark: boolean) => void;
 }
 
-export default function MerchantDashboard({ user, onLogout, onSessionExpired, darkMode, setDarkMode }: MerchantDashboardProps) {
+export default function MerchantDashboard({ user, onLogout, darkMode, setDarkMode }: MerchantDashboardProps) {
   const [currentUser, setCurrentUser] = useState<User>(user);
 
   useEffect(() => {
     setCurrentUser(user);
   }, [user]);
-
-  useEffect(() => {
-    const sessionHandler = createSessionTimeoutHandler(() => {
-      onSessionExpired();
-    });
-
-    sessionHandler.attach();
-    return () => sessionHandler.detach();
-  }, [onSessionExpired]);
 
   // Navigation Tabs
   const [activeTab, setActiveTab] = useState<'payments' | 'qr' | 'settings'>('payments');
@@ -111,22 +98,15 @@ export default function MerchantDashboard({ user, onLogout, onSessionExpired, da
   // QR Code state
   const [copiedLink, setCopiedLink] = useState(false);
 
+  // STRIP PROTOCOL FOR LIVE ENVIRONMENT AND FIX SYNTAX TYPO
+  const cleanDomain = window.location.origin.replace(/^https?:\/\//, '');
   const publicUrl = `${window.location.origin}/u/${currentUser.id}`;
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(publicUrl)}`;
-
-  const authFetch = async (input: RequestInfo | URL, init?: RequestInit) => {
-    const response = await apiFetch(input, init);
-    if (response.status === 401) {
-      onSessionExpired();
-      throw new Error('Session expired. Please sign in again.');
-    }
-    return response;
-  };
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(`${cleanDomain}/u/${currentUser.id}`)}`;
 
   const handleAcknowledgeMaintenance = async () => {
     setAcknowledging(true);
     try {
-      const response = await authFetch('/api/merchant/acknowledge-maintenance', {
+      const response = await fetch('/api/merchant/acknowledge-maintenance', {
         method: 'POST'
       });
       const data = await response.json();
@@ -145,24 +125,26 @@ export default function MerchantDashboard({ user, onLogout, onSessionExpired, da
   };
 
   // Fetch bank details
-  const fetchBanks = async () => {
+  const fetchBanks = () => {
     setLoadingBanks(true);
-    try {
-      const response = await authFetch('/api/merchant/banks');
-      const data = await response.json();
-      if (Array.isArray(data)) {
-        setBanks(data);
-        setBankingError(null);
-      } else {
-        setBanks([]);
-        setBankingError(data?.error || 'Failed to parse mobile banking profiles format.');
-      }
-    } catch (err) {
-      console.error(err);
-      setBankingError('Failed to fetch mobile banking profiles.');
-    } finally {
-      setLoadingBanks(false);
-    }
+    fetch('/api/merchant/banks')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setBanks(data);
+          setBankingError(null);
+        } else {
+          setBanks([]);
+          setBankingError(data?.error || 'Failed to parse mobile banking profiles format.');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setBankingError('Failed to fetch mobile banking profiles.');
+      })
+      .finally(() => {
+        setLoadingBanks(false);
+      });
   };
 
   useEffect(() => {
@@ -171,7 +153,7 @@ export default function MerchantDashboard({ user, onLogout, onSessionExpired, da
 
   const handleLogout = async () => {
     try {
-      await authFetch('/api/auth/logout', { method: 'POST' });
+      await fetch('/api/auth/logout', { method: 'POST' });
       onLogout();
     } catch (err) {
       console.error(err);
@@ -187,8 +169,9 @@ export default function MerchantDashboard({ user, onLogout, onSessionExpired, da
     setProfileError(null);
 
     try {
-      const response = await authFetch('/api/auth/profile', {
+      const response = await fetch('/api/auth/profile', {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, businessName })
       });
       const data = await response.json();
@@ -213,8 +196,9 @@ export default function MerchantDashboard({ user, onLogout, onSessionExpired, da
     setPasswordError(null);
 
     try {
-      const response = await authFetch('/api/auth/password', {
+      const response = await fetch('/api/auth/password', {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ oldPassword, newPassword })
       });
       const data = await response.json();
@@ -233,8 +217,9 @@ export default function MerchantDashboard({ user, onLogout, onSessionExpired, da
   // Toggle active bank status directly from the list
   const handleToggleBankActive = async (bank: BankingDetail) => {
     try {
-      const response = await authFetch(`/api/merchant/banks/${bank.id}`, {
+      const response = await fetch(`/api/merchant/banks/${bank.id}`, {
         method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           bankName: bank.bankName,
           accountNumber: bank.accountNumber,
@@ -284,8 +269,9 @@ export default function MerchantDashboard({ user, onLogout, onSessionExpired, da
     const method = editingBank ? 'PUT' : 'POST';
 
     try {
-      const response = await authFetch(url, {
+      const response = await fetch(url, {
         method,
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bankName, accountNumber, payLink, isActive })
       });
       const data = await response.json();
@@ -312,7 +298,7 @@ export default function MerchantDashboard({ user, onLogout, onSessionExpired, da
     setDeleteBankError(null);
 
     try {
-      const response = await authFetch(`/api/merchant/banks/${bankToDelete.id}`, {
+      const response = await fetch(`/api/merchant/banks/${bankToDelete.id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -390,7 +376,9 @@ export default function MerchantDashboard({ user, onLogout, onSessionExpired, da
       {/* Top Header with Brand */}
       <header className="sticky top-0 z-30 w-full bg-white/70 dark:bg-zinc-900/60 backdrop-blur-xl border-b border-slate-200/55 dark:border-zinc-800/30 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <BrandLogo className="h-10 w-10" />
+          <div className="w-9 h-9 rounded-xl bg-emerald-500 flex items-center justify-center text-black font-extrabold shadow-sm shadow-emerald-500/20">
+            {currentUser.businessName.charAt(0).toUpperCase()}
+          </div>
           <div>
             <h1 className="text-base font-extrabold tracking-tight leading-none text-slate-900 dark:text-white">
               {currentUser.businessName}
