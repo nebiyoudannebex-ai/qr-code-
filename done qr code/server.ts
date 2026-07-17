@@ -173,7 +173,7 @@ app.get('/api/auth/me', async (req, res) => {
   }
 });
 
-// Login route
+// Login route - Optimized with parallel data fetching
 app.post('/api/auth/login', loginRateLimiter, async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
@@ -189,11 +189,17 @@ app.post('/api/auth/login', loginRateLimiter, async (req, res) => {
 
     const token = crypto.randomBytes(32).toString('hex');
     const expiresAt = Date.now() + SESSION_DURATION_MS;
-    await createSession(token, user.id, expiresAt);
+    
+    // Fetch session creation and banking details in PARALLEL instead of sequentially
+    const [_, bankingDetails] = await Promise.all([
+      createSession(token, user.id, expiresAt),
+      user.role === 'merchant' ? getBankingDetailsByUserId(user.id) : Promise.resolve([])
+    ]);
 
     res.setHeader('Set-Cookie', buildSessionCookie(token, SESSION_DURATION_MS / 1000));
     await addCustomAuditLog(user.id, user.username, 'login_success', `User successfully logged in. Role: ${user.role}`);
 
+    // Return user data + pre-fetched banking details for instant dashboard load
     return res.json({
       user: {
         id: user.id,
@@ -205,7 +211,9 @@ app.post('/api/auth/login', loginRateLimiter, async (req, res) => {
         accountStatus: user.accountStatus || 'active',
         expiryDate: user.expiryDate,
         lastNotified: user.lastNotified
-      }
+      },
+      // NEW: Include banking details in login response for instant UI load
+      bankingDetails: bankingDetails || []
     });
   } catch (error: any) {
     console.error('[POST /api/auth/login] Login failed:', error);
