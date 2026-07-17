@@ -39,7 +39,18 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 // Security configuration: Disable CSP completely during local development 
 // so Vite's WebSockets, HMR (Hot Module Replacement), and inline scripts aren't blocked.
 if (IS_PRODUCTION) {
-  app.use(helmet());
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+          styleSrc: ["'self'", "'unsafe-inline'"],
+          imgSrc: ["'self'", "data:", "https://api.qrserver.com", "https://upload.wikimedia.org"],
+        },
+      },
+    })
+  );
 } else {
   app.use(
     helmet({
