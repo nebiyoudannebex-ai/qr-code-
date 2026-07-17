@@ -5,7 +5,7 @@ import BrandLogo from './BrandLogo';
 import { apiFetch } from '../utils/api';
 
 interface LoginViewProps {
-  onLoginSuccess: (user: User) => void;
+  onLoginSuccess: (user: any) => void;  // Now receives full login response
   darkMode: boolean;
   setDarkMode: (dark: boolean) => void;
   onBackToDirectory: () => void;
@@ -49,7 +49,8 @@ export default function LoginView({ onLoginSuccess, darkMode, setDarkMode, onBac
         throw new Error('Administrators must login at the Admin Portal (/staff/admin).');
       }
 
-      onLoginSuccess(data.user);
+      // Pass full login response including bankingDetails for instant dashboard load
+      onLoginSuccess(data);
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Login failed. Please check your credentials.');
