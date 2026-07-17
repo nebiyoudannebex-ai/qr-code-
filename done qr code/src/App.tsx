@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { apiFetch } from './utils/api';
-import { User } from './types';
+import { User, BankingDetail } from './types';
+import { useSessionTimeout } from './hooks/useSessionTimeout';
+import { useBeforeUnloadLogout } from './hooks/useBeforeUnloadLogout';
 import LandingPage from './components/LandingPage';
 import PublicView from './components/PublicView';
 import LoginView from './components/LoginView';
@@ -9,6 +11,7 @@ import AdminDashboard from './components/AdminDashboard';
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
+  const [cachedBankingDetails, setCachedBankingDetails] = useState<BankingDetail[]>([]);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [darkMode, setDarkMode] = useState(true);
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -59,14 +62,19 @@ export default function App() {
       });
   }, []);
 
-  const handleLoginSuccess = async (loggedInUser: User) => {
+  const handleLoginSuccess = async (loginResponse: any) => {
     try {
       const response = await apiFetch('/api/auth/me');
       const data = await response.json();
-      const activeUser = data.user ?? loggedInUser;
+      const activeUser = data.user ?? loginResponse.user;
 
       if (!data.user) {
         setSessionNotice('Session could not be verified. Log in again after confirming Supabase is configured.');
+      }
+
+      // Cache banking details from login response for instant dashboard load
+      if (loginResponse.bankingDetails && Array.isArray(loginResponse.bankingDetails)) {
+        setCachedBankingDetails(loginResponse.bankingDetails);
       }
 
       setUser(activeUser);
@@ -84,6 +92,7 @@ export default function App() {
 
   const handleLogoutSuccess = () => {
     setUser(null);
+    setCachedBankingDetails([]);
     navigateTo('/');
   };
 
@@ -102,6 +111,19 @@ export default function App() {
       navigateTo('/staff');
     }
   };
+
+  // Activate 15-minute inactivity session timeout for logged-in users
+  useSessionTimeout({
+    timeoutMinutes: 15,
+    onTimeout: handleSessionExpired,
+    isActive: !!user && (currentPath.includes('/staff')),
+  });
+
+  // Automatically logout when page unloads (refresh, tab close, navigate away)
+  useBeforeUnloadLogout({
+    onLogout: handleLogoutSuccess,
+    isAuthenticated: !!user,
+  });
 
   if (checkingAuth) {
     return (
@@ -188,6 +210,7 @@ export default function App() {
           onSessionExpired={handleSessionExpired}
           darkMode={darkMode}
           setDarkMode={setDarkMode}
+          preloadedBankingDetails={cachedBankingDetails}
         />
       </>
     );
